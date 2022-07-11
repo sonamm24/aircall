@@ -1,3 +1,38 @@
-.listofcalls {
-  background-color: pink;
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+
+  border: 2px solid lightgray;
+  border-radius: 10px;
+
+  width: 85%;
+
+  margin-top: 1em;
+}
+
+.itemSummaryContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.itemSummaryLeftSide {
+  display: flex;
+  align-items: center;
+  padding-left: 1em;
+}
+
+.itemSummaryLeftSideText {
+  padding-left: 0.5em;
+}
+
+.itemSummaryLeftSideTopText {
+  font-weight: bold;
+}
+
+.itemSummaryLeftSideBottomText,
+.itemSummaryRightSide {
+  color: grey;
 }

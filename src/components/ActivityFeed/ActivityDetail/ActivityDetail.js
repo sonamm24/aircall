@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { BiArchiveIn, BiArchiveOut } from "react-icons/bi";
 
 import "./ActivityDetail.css";
 
 export default function ActivityDetail({
   activityInfo,
-  onArchiveStatusUpdate,
+  onItemHasBeenArchived,
 }) {
   const [isArchived, setIsArchived] = useState(activityInfo.is_archived);
 
@@ -21,7 +22,9 @@ export default function ActivityDetail({
       .then((response) => response.json())
       .then((updatedActivityInfo) => {
         setIsArchived(updatedActivityInfo.is_archived);
-        onArchiveStatusUpdate(updatedActivityInfo.is_archived);
+        if (updatedActivityInfo.is_archived === true) {
+          onItemHasBeenArchived();
+        }
       });
   };
 
@@ -62,25 +65,20 @@ export default function ActivityDetail({
     }
   };
 
-  const getArchiveText = () => {
+  const getArchiveIcon = () => {
     if (isArchived === true) {
-      return "Unarchive Call";
+      return <BiArchiveOut size={"2em"} color={"grey"} />;
     }
-    return "Archive Call";
+    return <BiArchiveIn size={"2em"} color={"black"} />;
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div>{getCalleeText()}</div>
-      <div className="Detail">
+    <div className="activityDetailContainer">
+      <div className="activityDetailContainerLeftSide">
+        <div>{getCalleeText()}</div>
         <div>{getText()}</div>
-        <button onClick={toggleArchiveStatusOfCall}>{getArchiveText()}</button>
       </div>
+      <button onClick={toggleArchiveStatusOfCall}>{getArchiveIcon()}</button>
     </div>
   );
 }

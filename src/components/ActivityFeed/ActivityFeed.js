@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ActivityItem from "./ActivityItem/ActivityItem";
 
+import "./ActivityFeed.css";
+
 export default function ActivityFeed({ mode }) {
   const [listOfCalls, setListOfCalls] = useState([]);
 
@@ -13,6 +15,14 @@ export default function ActivityFeed({ mode }) {
       });
   };
 
+  const onItemHasBeenArchived = (targetIndex) => {
+    if (mode === "inbox") {
+      setListOfCalls(
+        listOfCalls.filter((item, index) => index !== targetIndex)
+      );
+    }
+  };
+
   // show a list of calls
   const generateCallList = () => {
     // return an array of list items
@@ -21,25 +31,20 @@ export default function ActivityFeed({ mode }) {
         (mode === "inbox" && callObject.is_archived === false) ||
         mode === "all"
       ) {
-        return <ActivityItem key={index} activityInfo={callObject} />;
+        return (
+          <ActivityItem
+            key={index}
+            activityInfo={callObject}
+            onItemHasBeenArchived={() => onItemHasBeenArchived(index)}
+          />
+        );
       }
     });
   };
 
   useEffect(() => {
     getListOfCalls();
-  }, []);
+  }, [mode]);
 
-  return (
-    <ol
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-      }}
-    >
-      <h1>Activity Feed</h1>
-      {generateCallList()}
-    </ol>
-  );
+  return <ol className="activityFeedContainer">{generateCallList()}</ol>;
 }

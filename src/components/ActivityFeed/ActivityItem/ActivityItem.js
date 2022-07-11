@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import ActivityDetail from "../ActivityDetail/ActivityDetail";
+import {
+  BsFillTelephoneInboundFill,
+  BsFillTelephoneOutboundFill,
+  BsFillTelephoneXFill,
+  BsFillTelephoneForwardFill,
+} from "react-icons/bs";
 import "./ActivityItem.css";
 
-export default function ActivityItem({ activityInfo }) {
+export default function ActivityItem({ activityInfo, onItemHasBeenArchived }) {
   const [showDetail, setShowDetail] = useState(false);
 
   // toggle showDetail value
@@ -38,26 +44,41 @@ export default function ActivityItem({ activityInfo }) {
 
   // get Icon
   const getIcon = () => {
+    // call was missed outbound and inbound
+    if (activityInfo.call_type === "missed") {
+      return <BsFillTelephoneXFill />;
+    }
+    // call was outbound and was answered
     if (activityInfo.direction === "outbound") {
-      return "outbound_icon";
+      return <BsFillTelephoneOutboundFill />;
     } else {
-      return "inbound_icon";
+      // call was inbound and went to voice mail
+      if (activityInfo.call_type === "voicemail") {
+        return <BsFillTelephoneForwardFill />;
+      }
+      // call was inbound and was answered
+      return <BsFillTelephoneInboundFill />;
     }
   };
 
   return (
-    <li>
-      <div className="listofcalls" onClick={toggleShowDetail}>
-        <div>
-          <div>{getIcon()}</div>
-          <div>
-            <div>{getCallerText()}</div>
-            <div>{getVIA()}</div>
+    <div className="itemContainer">
+      <div className="itemSummaryContainer" onClick={toggleShowDetail}>
+        <div className="itemSummaryLeftSide">
+          {getIcon()}
+          <div className="itemSummaryLeftSideText">
+            <div className="itemSummaryLeftSideTopText">{getCallerText()}</div>
+            <div className="itemSummaryLeftSideBottomText">{getVIA()}</div>
           </div>
-          <div>{getCallTime()}</div>
         </div>
+        <div className="itemSummaryRightSide">{getCallTime()}</div>
       </div>
-      {showDetail && <ActivityDetail activityInfo={activityInfo} />}
-    </li>
+      {showDetail && (
+        <ActivityDetail
+          activityInfo={activityInfo}
+          onItemHasBeenArchived={onItemHasBeenArchived}
+        />
+      )}
+    </div>
   );
 }

@@ -14,7 +14,7 @@ export default function App() {
         <Header />
         <Navbar />
         <Routes>
-          <Route path="" element={<ActivityFeed mode={"all"} />} />
+          <Route path="/" element={<ActivityFeed mode={"all"} />} />
           <Route path="/inbox" element={<ActivityFeed mode={"inbox"} />} />
         </Routes>
       </div>

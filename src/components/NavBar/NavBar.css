@@ -1,6 +1,25 @@
 .NavBar {
-  background-color: burlywood;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  width: 100%;
+  font-size: x-large;
+  color: black;
+  padding-top: 1em;
+}
+
+.nav-link {
+  color: grey;
+  width: 50%;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.5em;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 2px grey solid;
+}
+
+.nav-link.selected {
+  background-color: grey;
+  color: white;
 }
