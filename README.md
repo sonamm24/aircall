@@ -19,7 +19,6 @@ yarn install
 yarn start
 ```
 
-- **GET** - https://aircall-job.herokuapp.com/reset: Reset all calls to initial state (usefull if you archived all calls).
 
 ### Call object
 
